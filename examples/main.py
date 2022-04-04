@@ -3,7 +3,7 @@ from fastapi import File
 from fastapi import UploadFile
 
 from examples.models import PostContractJSONSchema, PostContractBodySchema
-from pyfa_converter.depends import FormBody
+from pyfa_converter import FormBody
 
 app = FastAPI()
 
