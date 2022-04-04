@@ -1,4 +1,4 @@
-# pydantic-fastapi-converter
+# pyfa-converter
 Makes it pretty easy to create a model based on Field [pydantic] and use the model for www-form-data.
 
 ### How to simplify your life?
