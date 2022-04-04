@@ -1,9 +1,9 @@
-from fastapi import Depends
 from fastapi import FastAPI
 from fastapi import File
 from fastapi import UploadFile
 
 from examples.models import PostContractJSONSchema, PostContractBodySchema
+from pyfa_converter.depends import FormBody
 
 app = FastAPI()
 
@@ -20,7 +20,7 @@ async def example_json_body_handler(
 
 @app.post("/form-data-body")
 async def example_foo_body_handler(
-    data: PostContractBodySchema = Depends(PostContractBodySchema.body),
+    data: PostContractBodySchema = FormBody(),
     document: UploadFile = File(...),
 ):
     return {
