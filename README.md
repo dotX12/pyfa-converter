@@ -2,12 +2,13 @@
 Makes it pretty easy to create a model based on Field [pydantic] and use the model for www-form-data.
 
 ### How to simplify your life?
-![image](https://user-images.githubusercontent.com/64792903/161485502-aaac5b3d-86a9-46df-a505-537889b2863f.png)
+![image](https://user-images.githubusercontent.com/64792903/161491444-60e211fe-26c3-44ea-aade-a7c4177eaa74.png)
 
 ---
 
 ### What do I need to do with the model?
-We put the decorator `@PydanticConverter.body` for the model and enjoy.
+* We put the decorator `@PydanticConverter.body` for the model and enjoy.
+* `data: YourPydanticModel = FormBody()`
 
 ---
 
