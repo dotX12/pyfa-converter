@@ -4,6 +4,9 @@ Makes it pretty easy to create a model based on Field [pydantic] and use the mod
 ### How to simplify your life?
 ![image](https://user-images.githubusercontent.com/64792903/161485502-aaac5b3d-86a9-46df-a505-537889b2863f.png)
 
+### What do I need to do with the model?
+We put the decorator `@PydanticConverter.body` for the model and enjoy.
+
 If you want to accept a file on an endpoint, then the content-type for that endpoint changes from application/json to www-form-data.
 
 FastAPI does not know how to override the pydantic schema so that parameters are passed as form.
