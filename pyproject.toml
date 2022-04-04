@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "pydantic-fastapi-converter"
+name = "pyfa-converter"
 version = "0.1.0"
 description = "Pydantic to fastapi model converter."
 authors = ["dotX12 <dev@shitposting.team>"]

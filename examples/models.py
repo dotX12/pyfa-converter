@@ -6,7 +6,7 @@ from pydantic import BaseModel
 from pydantic import Field
 from pydantic import validator
 
-from pydantic_fastapi_converter import PydanticConverter
+from pyfa_converter import PydanticConverter
 
 
 class PostContractJSONSchema(BaseModel):
