@@ -20,16 +20,16 @@ class PydanticConverter:
     def __form(cls, model_field: ModelField, default: Any):
         return Form(
             default=default,
-            alias=model_field.alias,
-            title=model_field.field_info.title,
-            description=model_field.field_info.description,
-            gt=model_field.field_info.gt,
-            ge=model_field.field_info.ge,
-            lt=model_field.field_info.lt,
-            le=model_field.field_info.le,
-            min_length=model_field.field_info.min_length,
-            max_length=model_field.field_info.max_length,
-            regex=model_field.field_info.regex,
+            alias=model_field.alias or None,
+            title=model_field.field_info.title or None,
+            description=model_field.field_info.description or None,
+            gt=model_field.field_info.gt or None,
+            ge=model_field.field_info.ge or None,
+            lt=model_field.field_info.lt or None,
+            le=model_field.field_info.le or None,
+            min_length=model_field.field_info.min_length or None,
+            max_length=model_field.field_info.max_length or None,
+            regex=model_field.field_info.regex or None,
         )
 
     @classmethod
