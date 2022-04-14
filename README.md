@@ -1,6 +1,10 @@
 # pyfa-converter
 Makes it pretty easy to create a model based on Field [pydantic] and use the model for www-form-data.
 
+
+### How to install?
+`pip install pyfa_converter`
+
 ### How to simplify your life?
 ![image](https://user-images.githubusercontent.com/64792903/161491444-60e211fe-26c3-44ea-aade-a7c4177eaa74.png)
 
