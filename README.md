@@ -2,7 +2,7 @@
 Makes it pretty easy to create a model based on Field [pydantic] and use the model for www-form-data.
 
 
-##$ How to install?
+### How to install?
 `pip install pyfa_converter`
 
 ### How to simplify your life?
