@@ -22,6 +22,23 @@ class PostContractJSONSchema(BaseModel):
         return v.date()
 
 
+class PostContractSmallJSONSchema(BaseModel):
+    title: str = Field(..., description="Description title")
+    date: Optional[datetime] = Field(
+        None, description="Example: 2021-12-14T09:56:31.056Z"
+    )
+
+
 @PydanticConverter.body
 class PostContractBodySchema(PostContractJSONSchema):
+    pass
+
+
+@PydanticConverter.body
+class PostContractSmallBodySchema(PostContractSmallJSONSchema):
+    pass
+
+
+@PydanticConverter.body
+class PostContractSmallDoubleBodySchema(PostContractSmallJSONSchema):
     pass

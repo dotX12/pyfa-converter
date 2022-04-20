@@ -19,7 +19,7 @@ class PydanticConverter:
     @classmethod
     def __form(cls, model_field: ModelField, default: Any):
         return Form(
-            default=default,
+            default=default or None,
             alias=model_field.alias or None,
             title=model_field.field_info.title or None,
             description=model_field.field_info.description or None,
@@ -48,11 +48,12 @@ class PydanticConverter:
                 )
             )
 
-        def as_form_func(**data):
-            return parent_cls(**data)
+        async def as_form_func(*args, **kwargs):
+            return parent_cls(*args, **kwargs)  # noqa
 
         sig = inspect.signature(as_form_func)
         sig = sig.replace(parameters=new_parameters)
         as_form_func.__signature__ = sig
         setattr(cls, 'body', as_form_func)
         return cls
+
