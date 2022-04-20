@@ -48,7 +48,7 @@ class PydanticConverter:
                 )
             )
 
-        async def as_form_func(*args, **kwargs):
+        def as_form_func(*args, **kwargs):
             return parent_cls(*args, **kwargs)  # noqa
 
         sig = inspect.signature(as_form_func)
