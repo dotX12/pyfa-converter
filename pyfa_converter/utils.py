@@ -3,13 +3,13 @@ from typing import Any
 from typing import Type
 
 from fastapi import Body
+from fastapi import Depends
 from fastapi import Form
 from pydantic import BaseModel
 from pydantic.fields import ModelField
 
 
-class PydanticConverter:
-
+class PydanticConverterUtils:
     @classmethod
     def form(cls, field: ModelField) -> Body:
         if field.required is True:
@@ -32,28 +32,60 @@ class PydanticConverter:
             regex=model_field.field_info.regex or None,
         )
 
-    @classmethod
-    def body(cls, parent_cls: Type[BaseModel]):
-        new_parameters = []
 
-        for field_name, model_field in parent_cls.__fields__.items():
-            model_field: ModelField
+class PydanticConverter:
 
-            new_parameters.append(
-                inspect.Parameter(
-                    field_name,
-                    inspect.Parameter.POSITIONAL_ONLY,
-                    default=cls.form(field=model_field),
-                    annotation=model_field.outer_type_,
+    @staticmethod
+    def body(cls: Type[BaseModel]) -> Type[BaseModel]:
+        """
+        Adds an `body` class method to decorated models. The `body` class
+        method can be used with `FastAPI` endpoints.
+
+        Args:
+            cls: The model class to decorate.
+
+        Returns:
+            The decorated class.
+        """
+
+        def make_form_parameter(field: ModelField) -> Any:
+            """
+            Converts a field from a `Pydantic` model to the appropriate `FastAPI`
+            parameter type.
+
+            Args:
+                field: The field to convert.
+
+            Returns:
+                Either the result of `Form`, if the field is not a sub-model, or
+                the result of `Depends` if it is.
+
+            """
+            if issubclass(field.type_, BaseModel):
+                # This is a sub-model.
+                assert hasattr(field.type_, "body"), (
+                    f"Sub-model class for {field.name} field must be decorated with"
+                    f" `as_form` too."
                 )
+                return Depends(field.type_.body) # noqa
+            else:
+                return PydanticConverterUtils.form(field=field)
+
+        new_params = [
+            inspect.Parameter(
+                field.alias,
+                inspect.Parameter.POSITIONAL_ONLY,
+                default=make_form_parameter(field),
             )
+            for field in cls.__fields__.values()
+        ]
 
-        def as_form_func(*args, **kwargs):
-            return parent_cls(*args, **kwargs)  # noqa
+        async def _as_form(**data):
+            return cls(**data)
 
-        sig = inspect.signature(as_form_func)
-        sig = sig.replace(parameters=new_parameters)
-        as_form_func.__signature__ = sig
-        setattr(cls, 'body', as_form_func)
+        sig = inspect.signature(_as_form)
+        sig = sig.replace(parameters=new_params)
+        _as_form.__signature__ = sig
+        setattr(cls, "body", _as_form)
         return cls
 

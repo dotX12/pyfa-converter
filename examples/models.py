@@ -40,5 +40,6 @@ class PostContractSmallBodySchema(PostContractSmallJSONSchema):
 
 
 @PydanticConverter.body
-class PostContractSmallDoubleBodySchema(PostContractSmallJSONSchema):
-    pass
+class PostContractSmallDoubleBodySchema(BaseModel):
+    id: Optional[int] = Field(None, description='gwa')
+    title: Optional[str] = Field(None)
