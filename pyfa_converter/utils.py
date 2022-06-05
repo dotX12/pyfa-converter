@@ -27,13 +27,6 @@ class PydanticConverterUtils:
         return cls.__fill_params(param=Query, model_field=field, default=field.default)
 
     @classmethod
-    def __base_param(cls, field: ModelField, param: Union[Form, Query]):
-        if type(param) is Form:
-            return cls.form(field=field)
-        if type(param) is Query:
-            return cls.query(field=field)
-
-    @classmethod
     def __fill_params(
         cls, param: Union[Form, Query], model_field: ModelField, default: Any
     ):
@@ -119,7 +112,7 @@ class PydanticConverter:
     @staticmethod
     def query(cls: Type[BaseModel]) -> Type[BaseModel]:
         """
-        Adds an `body` class method to decorated models. The `query` class
+        Adds an `query` class method to decorated models. The `query` class
         method can be used with `FastAPI` endpoints.
 
         Args:
@@ -138,7 +131,7 @@ class PydanticConverter:
                 field: The field to convert.
 
             Returns:
-                Either the result of `Form`, if the field is not a sub-model, or
+                Either the result of `Query`, if the field is not a sub-model, or
                 the result of `Depends` if it is.
 
             """
