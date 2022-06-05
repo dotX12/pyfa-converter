@@ -2,9 +2,12 @@ from fastapi import FastAPI
 from fastapi import File
 from fastapi import UploadFile
 
-from examples.models import PostContractJSONSchema, PostContractBodySchema
+from examples.models import PostContractBodySchema
+from examples.models import PostContractJSONSchema
 from examples.models import PostContractSmallDoubleBodySchema
+from examples.models import PostContractSmallDoubleQuerySchema
 from pyfa_converter import FormBody
+from pyfa_converter.depends import QueryBody
 
 app = FastAPI()
 
@@ -24,11 +27,7 @@ async def example_foo_body_handler(
     data: PostContractBodySchema = FormBody(PostContractBodySchema),
     document: UploadFile = File(...),
 ):
-    return {
-        "title": data.title,
-        "date": data.date,
-        "file_name": document.filename
-    }
+    return {"title": data.title, "date": data.date, "file_name": document.filename}
 
 
 @app.post("/form-data-body-two")
@@ -36,15 +35,22 @@ async def example_foo_body_handler(
     data: PostContractBodySchema = FormBody(PostContractBodySchema),
     document: UploadFile = File(...),
 ):
-    return {
-        "title": data.title,
-        "date": data.date,
-        "file_name": document.filename
-    }
+    return {"title": data.title, "date": data.date, "file_name": document.filename}
 
 
 @app.post("/test")
 async def foo(
-    data: PostContractSmallDoubleBodySchema = FormBody(PostContractSmallDoubleBodySchema),
+    data: PostContractSmallDoubleBodySchema = FormBody(
+        PostContractSmallDoubleBodySchema
+    ),
 ):
-    return {'bar': 'bar'}
+    return {"bar": "bar"}
+
+
+@app.post("/test_query_list")
+async def test_list_form(
+    data: PostContractSmallDoubleQuerySchema = QueryBody(
+        PostContractSmallDoubleQuerySchema
+    ),
+):
+    return {"data": data}
