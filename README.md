@@ -1,5 +1,7 @@
 # pyfa-converter
 Makes it pretty easy to create a model based on Field [pydantic] and use the model for www-form-data.
+0.4.0 - Added support for query parameters.
+
 
 
 ### How to install?
@@ -13,6 +15,9 @@ Makes it pretty easy to create a model based on Field [pydantic] and use the mod
 ### What do I need to do with the model?
 * We put the decorator `@PydanticConverter.body` for the model and enjoy.
 * `data: YourPydanticModel = FormBody(YourPydanticModel)`
+
+* We put the decorator `@PydanticConverter.query` for the model and enjoy.
+* `data: YourPydanticModel = QueryBody(YourPydanticModel)`
 
 ---
 
