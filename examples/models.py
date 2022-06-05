@@ -1,5 +1,6 @@
 from datetime import datetime
 from decimal import Decimal
+from typing import List
 from typing import Optional
 
 from pydantic import BaseModel
@@ -17,7 +18,7 @@ class PostContractJSONSchema(BaseModel):
     amount: Optional[Decimal] = Field(None, description="Description amount")
     unit_price: Optional[Decimal] = Field(None, description="Description unit_price")
 
-    @validator('date', each_item=True)
+    @validator("date", each_item=True)
     def date_validator(cls, v: datetime):
         return v.date()
 
@@ -41,5 +42,13 @@ class PostContractSmallBodySchema(PostContractSmallJSONSchema):
 
 @PydanticConverter.body
 class PostContractSmallDoubleBodySchema(BaseModel):
-    id: Optional[int] = Field(None, description='gwa')
+    id: Optional[int] = Field(None, description="gwa")
     title: Optional[str] = Field(None)
+    data: Optional[List[int]]
+
+
+@PydanticConverter.query
+class PostContractSmallDoubleQuerySchema(BaseModel):
+    id: Optional[int] = Field(None, description="gwa")
+    title: Optional[str] = Field(None)
+    data: Optional[List[int]] = Field(default=[1, 2, 3])
