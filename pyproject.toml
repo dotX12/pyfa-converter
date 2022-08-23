@@ -6,8 +6,8 @@ authors = ["dotX12 <dev@shitposting.team>"]
 
 [tool.poetry.dependencies]
 python = "^3.10"
-fastapi = "^0.78.0"
-pydantic = "^1.9.0"
+fastapi = "^0.65.0"
+pydantic = "^1.6.2"
 python-multipart = "^0.0.5"
 
 [tool.poetry.dev-dependencies]

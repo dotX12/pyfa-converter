@@ -1,8 +1,8 @@
-from .utils import PydanticConverter
-from .depends import FormBody, QueryBody
+from .main import PydanticConverter
+from .depends import FormDepends, QueryDepends
 
 __all__ = (
     "PydanticConverter",
-    "FormBody",
-    "QueryBody",
+    "FormDepends",
+    "QueryDepends",
 )
