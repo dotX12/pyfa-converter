@@ -7,8 +7,6 @@ from pydantic import BaseModel
 from pydantic import Field
 from pydantic import validator
 
-from pyfa_converter import PydanticConverter
-
 
 class PostContractJSONSchema(BaseModel):
     title: str = Field(..., description="Description title")
@@ -30,25 +28,28 @@ class PostContractSmallJSONSchema(BaseModel):
     )
 
 
-@PydanticConverter.body
 class PostContractBodySchema(PostContractJSONSchema):
     pass
 
 
-@PydanticConverter.body
 class PostContractSmallBodySchema(PostContractSmallJSONSchema):
     pass
 
 
-@PydanticConverter.body
 class PostContractSmallDoubleBodySchema(BaseModel):
     id: Optional[int] = Field(None, description="gwa")
     title: Optional[str] = Field(None)
     data: Optional[List[int]]
 
 
-@PydanticConverter.query
 class PostContractSmallDoubleQuerySchema(BaseModel):
     id: Optional[int] = Field(None, description="gwa")
     title: Optional[str] = Field(None)
     data: Optional[List[int]] = Field(default=[1, 2, 3])
+
+
+class ExampleSchemaForHeader(BaseModel):
+    strange_header: Optional[str] = Field(None, convert_underscores=True)
+    query: str = Field(...)
+    form: str = Field(...)
+    body: str = Field(...)
