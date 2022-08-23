@@ -7,16 +7,50 @@ Allows you to convert pydantic models for fastapi param models - query, form, he
 `pip install pyfa_converter`
 
 ### How to simplify your life?
-![image](https://user-images.githubusercontent.com/64792903/164955297-f2b40e3d-a44a-483d-987a-8ed0de3420bd.png)
+```python3
+from datetime import datetime
+from typing import Optional
+
+from fastapi import FastAPI, UploadFile, File, Form
+from pydantic import BaseModel, Field
+
+from pyfa_converter import FormDepends, PyFaDepends
+
+app = FastAPI()
+
+
+class PostContractBodySchema(BaseModel):
+    title: str = Field(..., description="Description title")
+    date: Optional[datetime] = Field(
+        None, description="Example: 2021-12-14T09:56:31.056Z"
+    )
+
+
+@app.post("/form-data-body")
+async def example_foo_body_handler(
+    data: PostContractBodySchema = FormDepends(PostContractBodySchema),
+    # data1: PostContractBodySchema = PyFaDepends( # OR
+    #         model= PostContractBodySchema, _type=Form
+    #     ),
+    document: UploadFile = File(...),
+):
+    return {"title": data.title, "date": data.date, "file_name": document.filename}
+```
 
 ---
 
-### What do I need to do with the model?
-* We put the decorator `@PydanticConverter.body` for the model and enjoy.
-* `data: YourPydanticModel = FormBody(YourPydanticModel)`
+### What do I need to do?
+```python3
+from pyfa_converter import PyFaDepends, FormDepends, QueryDepends
+from fastapi import Header, Form
+...
 
-* We put the decorator `@PydanticConverter.query` for the model and enjoy.
-* `data: YourPydanticModel = QueryBody(YourPydanticModel)`
+async def foo(data: MyCustomModel = PyFaDepends(MyCustomModel, _type=Header)): ...
+async def foo(data: MyCustomModel = PyFaDepends(MyCustomModel, _type=Form)): ...
+
+async def foo(data: MyCustomModel = FormDepends(MyCustomModel)): ...
+async def foo(data: MyCustomModel = QueryDepends(MyCustomModel)): ...
+```
 
 ---
 
