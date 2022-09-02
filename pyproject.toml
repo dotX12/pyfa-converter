@@ -6,6 +6,8 @@ authors = ["dotX12 <dev@shitposting.team>"]
 license = "MIT License"
 homepage = "https://github.com/dotX12/pyfa-converter"
 repository = "https://github.com/dotX12/pyfa-converter"
+readme = "README.md"
+
 include = [
     "README.md",
     "LICENSE.md"
