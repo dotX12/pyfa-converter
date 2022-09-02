@@ -3,6 +3,13 @@ name = "pyfa-converter"
 version = "1.0.1.0"
 description = "Pydantic to fastapi model converter."
 authors = ["dotX12 <dev@shitposting.team>"]
+license = "MIT License"
+homepage = "https://github.com/dotX12/pyfa-converter"
+repository = "https://github.com/dotX12/pyfa-converter"
+include = [
+    "README.md",
+    "LICENSE.md"
+]
 
 [tool.poetry.dependencies]
 python = ">= 3.8"
