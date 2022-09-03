@@ -5,7 +5,7 @@ from typing import Type
 from typing import Union
 from warnings import warn
 
-from fastapi import Body
+from fastapi import Body, Query
 from fastapi import Depends
 from pydantic import BaseModel
 from pydantic.fields import ModelField, FieldInfo
@@ -153,4 +153,4 @@ class PydanticConverter(PydanticConverterUtils):
             stacklevel=2,
         )
 
-        return cls.reformat_model_signature(model_cls=model_cls, _type=Body)
+        return cls.reformat_model_signature(model_cls=model_cls, _type=Query)
