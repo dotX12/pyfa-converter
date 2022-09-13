@@ -5,10 +5,10 @@ on: pull_request
 jobs:
   test:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python-version: [ '3.6', '3.7', '3.8', '3.9', '3.10' ]
-    name: Python ${{ matrix.python-version }} sample
+#    strategy:
+#      matrix:
+#        python-version: [ '3.6', '3.7', '3.8', '3.9', '3.10' ]
+#    name: Python ${{ matrix.python-version }} sample
     steps:
       #----------------------------------------------
       #       check-out repo and set-up python
@@ -19,8 +19,9 @@ jobs:
         id: setup-python
         uses: actions/setup-python@v2
         with:
-          python-version: ${{ matrix.python-version }}
-          architecture: x64
+          python-version: 3.9
+#          python-version: ${{ matrix.python-version }}
+#          architecture: x64
 
       #----------------------------------------------
       #  -----  install & configure poetry  -----
