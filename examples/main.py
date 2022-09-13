@@ -2,7 +2,11 @@ from fastapi import FastAPI, Header
 from fastapi import File
 from fastapi import UploadFile
 
-from examples.models import PostContractBodySchema, ExampleSchemaForHeader, PostContractBodySchemaOldSupport
+from examples.models import (
+    PostContractBodySchema,
+    ExampleSchemaForHeader,
+    PostContractBodySchemaOldSupport,
+)
 from examples.models import PostContractJSONSchema
 from examples.models import PostContractSmallDoubleBodySchema
 from examples.models import PostContractSmallDoubleQuerySchema
@@ -74,4 +78,3 @@ async def example_foo_body_handler(
     document: UploadFile = File(...),
 ):
     return {"title": data.title, "date": data.date, "file_name": document.filename}
-

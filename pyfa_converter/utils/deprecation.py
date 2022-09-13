@@ -33,8 +33,10 @@ def deprecated(reason, stacklevel=2) -> Callable:
 
             @functools.wraps(func)
             def wrapper(*args, **kwargs):
-                warn_deprecated(msg.format(name=func.__name__, reason=reason), stacklevel=stacklevel)
-                warnings.simplefilter('default', DeprecationWarning)
+                warn_deprecated(
+                    msg.format(name=func.__name__, reason=reason), stacklevel=stacklevel
+                )
+                warnings.simplefilter("default", DeprecationWarning)
                 return func(*args, **kwargs)
 
             return wrapper
@@ -69,12 +71,14 @@ def deprecated(reason, stacklevel=2) -> Callable:
 
 
 def warn_deprecated(message, warning=DeprecationWarning, stacklevel=2):
-    warnings.simplefilter('always', warning)
+    warnings.simplefilter("always", warning)
     warnings.warn(message, category=warning, stacklevel=stacklevel)
-    warnings.simplefilter('default', warning)
+    warnings.simplefilter("default", warning)
 
 
-def renamed_argument(old_name: str, new_name: str, until_version: str, stacklevel: int = 3):
+def renamed_argument(
+    old_name: str, new_name: str, until_version: str, stacklevel: int = 3
+):
     """
     A meta-decorator to mark an argument as deprecated.
 
@@ -105,22 +109,27 @@ def renamed_argument(old_name: str, new_name: str, until_version: str, stackleve
             """
             Returns updated version of kwargs.
             """
-            routine_type = 'coroutine' if is_coroutine else 'function'
+            routine_type = "coroutine" if is_coroutine else "function"
             if old_name in kwargs:
-                warn_deprecated(f"In {routine_type} '{func.__name__}' argument '{old_name}' "
-                                f"is renamed to '{new_name}' "
-                                f"and will be removed in aiogram {until_version}",
-                                stacklevel=stacklevel)
+                warn_deprecated(
+                    f"In {routine_type} '{func.__name__}' argument '{old_name}' "
+                    f"is renamed to '{new_name}' "
+                    f"and will be removed in aiogram {until_version}",
+                    stacklevel=stacklevel,
+                )
                 kwargs = kwargs.copy()
                 kwargs.update({new_name: kwargs.pop(old_name)})
             return kwargs
 
         if is_coroutine:
+
             @functools.wraps(func)
             async def wrapped(*args, **kwargs):
                 kwargs = _handling(kwargs)
                 return await func(*args, **kwargs)
+
         else:
+
             @functools.wraps(func)
             def wrapped(*args, **kwargs):
                 kwargs = _handling(kwargs)
@@ -155,7 +164,9 @@ class DeprecatedReadOnlyClassVar(Generic[_OwnerCls, _VT]):
 
     __slots__ = "_new_value_getter", "_warning_message"
 
-    def __init__(self, warning_message: str, new_value_getter: Callable[[_OwnerCls], _VT]):
+    def __init__(
+        self, warning_message: str, new_value_getter: Callable[[_OwnerCls], _VT]
+    ):
         self._warning_message = warning_message
         self._new_value_getter = new_value_getter
 
