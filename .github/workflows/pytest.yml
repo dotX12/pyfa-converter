@@ -32,7 +32,7 @@ jobs:
           VERSION: 1.2.0
           VIRTUALENVS_PATH: .venv
           VIRTUALENVS_CREATE: true
-          VIRTUALENVS_IN_PROJECT: true
+          VIRTUALENVS_IN_PROJECT: false
           INSTALLER_PARALLEL: true
 
       #----------------------------------------------
