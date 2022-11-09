@@ -50,7 +50,7 @@ async def foo(
         PostContractSmallDoubleBodySchema
     ),
 ):
-    return {"bar": "bar"}
+    return {"data": data}
 
 
 @app.post("/test_query_list")
