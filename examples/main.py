@@ -74,6 +74,6 @@ async def test_list_form(
 
 @app.post("/test_int_ge")
 async def test_post_int_ge(
-    data: PostSchemaIntegerGE = FormDepends(PostSchemaIntegerGE)
+    data: PostSchemaIntegerGE = FormDepends(PostSchemaIntegerGE),
 ):
     return {"id": data.id}
