@@ -1,16 +1,14 @@
 import inspect
-from typing import Any, List
+from typing import Any
 from typing import Callable
+from typing import List
 from typing import Type
 from typing import Union
-from warnings import warn
 
-from fastapi import Body, Query
 from fastapi import Depends
 from pydantic import BaseModel
-from pydantic.fields import ModelField, FieldInfo
-from pyfa_converter.utils.deprecation import deprecated
-from pyfa_converter.utils.deprecation_message import DEPRECATION_MESSAGE
+from pydantic.fields import FieldInfo
+from pydantic.fields import ModelField
 
 
 class PydanticConverterUtils:
@@ -52,7 +50,7 @@ class PydanticConverterUtils:
                 name=field.alias,
                 kind=inspect.Parameter.POSITIONAL_ONLY,
                 default=param_maker(field),
-                annotation=field.outer_type_,
+                annotation=model.__annotations__.get(field.name) or field.annotation,
             )
             for field in model.__fields__.values()
         ]
@@ -114,43 +112,3 @@ class PydanticConverter(PydanticConverterUtils):
         _as_form.__signature__ = sig
         setattr(model_cls, _type_var_name, _as_form)
         return model_cls
-
-    @classmethod
-    @deprecated(DEPRECATION_MESSAGE)
-    def body(
-        cls, model_cls: Union[Type[BaseModel], Type["PydanticConverter"]]
-    ) -> Union[Type[BaseModel], Type["PydanticConverter"]]:
-        warn(
-            "This decorator is deprecated.\n"
-            "The decorator above the model is no longer required and will be removed in the next version!\n"
-            "Use:\n"
-            "data: MyCustomModel = PyFaDepends(MyCustomModel, _type=Header)\n"
-            "data: MyCustomModel = PyFaDepends(MyCustomModel, _type=Form)\n"
-            "or\n\n"
-            "data: MyCustomModel = FormDepends(MyCustomModel)\n"
-            "data: MyCustomModel = QueryDepends(MyCustomModel)",
-            DeprecationWarning,
-            stacklevel=2,
-        )
-
-        return cls.reformat_model_signature(model_cls=model_cls, _type=Body)
-
-    @classmethod
-    @deprecated(DEPRECATION_MESSAGE)
-    def query(
-        cls, model_cls: Union[Type[BaseModel], Type["PydanticConverter"]]
-    ) -> Union[Type[BaseModel], Type["PydanticConverter"]]:
-        warn(
-            "This decorator is deprecated.\n"
-            "The decorator above the model is no longer required and will be removed in the next version!\n"
-            "Use:\n"
-            "data: MyCustomModel = PyFaDepends(MyCustomModel, _type=Header)\n"
-            "data: MyCustomModel = PyFaDepends(MyCustomModel, _type=Form)\n"
-            "or\n\n"
-            "data: MyCustomModel = FormDepends(MyCustomModel)\n"
-            "data: MyCustomModel = QueryDepends(MyCustomModel)",
-            DeprecationWarning,
-            stacklevel=2,
-        )
-
-        return cls.reformat_model_signature(model_cls=model_cls, _type=Query)

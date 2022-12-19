@@ -4,8 +4,6 @@ from .depends import (
     QueryDepends,
     BodyDepends,
     PyFaDepends,
-    QueryBody,
-    FormBody,
 )
 
 __all__ = (
@@ -14,6 +12,4 @@ __all__ = (
     "QueryDepends",
     "PyFaDepends",
     "BodyDepends",
-    "FormBody",
-    "QueryBody",
 )

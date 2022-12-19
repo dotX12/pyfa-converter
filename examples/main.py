@@ -5,12 +5,12 @@ from fastapi import UploadFile
 from examples.models import (
     PostContractBodySchema,
     ExampleSchemaForHeader,
-    PostContractBodySchemaOldSupport,
 )
 from examples.models import PostContractJSONSchema
 from examples.models import PostContractSmallDoubleBodySchema
 from examples.models import PostContractSmallDoubleQuerySchema
-from pyfa_converter.depends import QueryDepends, FormDepends, PyFaDepends, FormBody
+from examples.models import PostSchemaIntegerGE
+from pyfa_converter.depends import QueryDepends, FormDepends, PyFaDepends
 
 app = FastAPI()
 
@@ -68,13 +68,12 @@ async def test_list_form(
         model=ExampleSchemaForHeader, _type=Header
     ),
 ):
-    print(data.strange_header)
+
     return {"data": data}
 
 
-@app.post("/form-data-body-old-support")
-async def example_foo_body_handler(
-    data: PostContractBodySchemaOldSupport = FormBody(PostContractBodySchemaOldSupport),
-    document: UploadFile = File(...),
+@app.post("/test_int_ge")
+async def test_post_int_ge(
+    data: PostSchemaIntegerGE = FormDepends(PostSchemaIntegerGE),
 ):
-    return {"title": data.title, "date": data.date, "file_name": document.filename}
+    return {"id": data.id}

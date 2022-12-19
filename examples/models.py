@@ -7,8 +7,6 @@ from pydantic import BaseModel
 from pydantic import Field
 from pydantic import validator
 
-from pyfa_converter import PydanticConverter
-
 
 class PostContractJSONSchema(BaseModel):
     title: str = Field(..., description="Description title")
@@ -57,6 +55,7 @@ class ExampleSchemaForHeader(BaseModel):
     body: str = Field(...)
 
 
-@PydanticConverter.body
-class PostContractBodySchemaOldSupport(PostContractJSONSchema):
-    pass
+class PostSchemaIntegerGE(BaseModel):
+    id: int = Field(..., description="gwa", ge=10)
+    title: Optional[str] = Field(None)
+    data: Optional[List[int]]
