@@ -9,7 +9,6 @@ from pydantic.fields import ModelField
 
 
 class PydanticConverter:
-
     @classmethod
     def form(cls, field: ModelField) -> Body:
         if field.required is True:
@@ -54,6 +53,5 @@ class PydanticConverter:
         sig = inspect.signature(as_form_func)
         sig = sig.replace(parameters=new_parameters)
         as_form_func.__signature__ = sig
-        setattr(cls, 'body', as_form_func)
+        setattr(cls, "body", as_form_func)
         return cls
-

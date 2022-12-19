@@ -1,17 +1,42 @@
 [tool.poetry]
 name = "pyfa-converter"
-version = "0.1.0"
+version = "1.0.1.0"
 description = "Pydantic to fastapi model converter."
 authors = ["dotX12 <dev@shitposting.team>"]
+license = "MIT License"
+homepage = "https://github.com/dotX12/pyfa-converter"
+repository = "https://github.com/dotX12/pyfa-converter"
+readme = "README.md"
+
+include = [
+    "README.md",
+    "LICENSE.md"
+]
 
 [tool.poetry.dependencies]
-python = "^3.7"
-fastapi = "^0.75.1"
-pydantic = "^1.9.0"
+python = ">= 3.8"
+fastapi = ">= 0.65"
+pydantic = ">= 1.6"
 python-multipart = "^0.0.5"
 
 [tool.poetry.dev-dependencies]
 
+[tool.poetry.group.tests]
+optional = true
+
+[tool.poetry.group.tests.dependencies]
+pytest = "^6.0.0"
+httpx = "^0.23.0"
+pytest_asyncio = "^0.19.0"
+pytest-mock = "*"
+
+
 [build-system]
-requires = ["poetry-core>=1.0.0"]
+requires = ["poetry-core>=1.2.0"]
 build-backend = "poetry.core.masonry.api"
+
+
+[tool.pytest.ini_options]
+addopts = "-scoped"
+asyncio_mode = "auto"
+filterwarnings = ["ignore::DeprecationWarning"]

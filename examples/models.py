@@ -1,12 +1,11 @@
 from datetime import datetime
 from decimal import Decimal
+from typing import List
 from typing import Optional
 
 from pydantic import BaseModel
 from pydantic import Field
 from pydantic import validator
-
-from pyfa_converter import PydanticConverter
 
 
 class PostContractJSONSchema(BaseModel):
@@ -17,7 +16,7 @@ class PostContractJSONSchema(BaseModel):
     amount: Optional[Decimal] = Field(None, description="Description amount")
     unit_price: Optional[Decimal] = Field(None, description="Description unit_price")
 
-    @validator('date', each_item=True)
+    @validator("date", each_item=True)
     def date_validator(cls, v: datetime):
         return v.date()
 
@@ -29,16 +28,34 @@ class PostContractSmallJSONSchema(BaseModel):
     )
 
 
-@PydanticConverter.body
 class PostContractBodySchema(PostContractJSONSchema):
     pass
 
 
-@PydanticConverter.body
 class PostContractSmallBodySchema(PostContractSmallJSONSchema):
     pass
 
 
-@PydanticConverter.body
-class PostContractSmallDoubleBodySchema(PostContractSmallJSONSchema):
-    pass
+class PostContractSmallDoubleBodySchema(BaseModel):
+    id: Optional[int] = Field(None, description="gwa")
+    title: Optional[str] = Field(None)
+    data: Optional[List[int]]
+
+
+class PostContractSmallDoubleQuerySchema(BaseModel):
+    id: Optional[int] = Field(None, description="gwa")
+    title: Optional[str] = Field(None)
+    data: Optional[List[int]] = Field(default=[1, 2, 3])
+
+
+class ExampleSchemaForHeader(BaseModel):
+    strange_header: Optional[str] = Field(None, convert_underscores=True)
+    query: str = Field(...)
+    form: str = Field(...)
+    body: str = Field(...)
+
+
+class PostSchemaIntegerGE(BaseModel):
+    id: int = Field(..., description="gwa", ge=10)
+    title: Optional[str] = Field(None)
+    data: Optional[List[int]]
