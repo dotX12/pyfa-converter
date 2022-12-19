@@ -9,7 +9,7 @@ async def tests_one(async_client: AsyncClient):
 
     data = {
         "title": "KEY1",
-        "date": datetime.datetime.now().isoformat(),
+        "date": datetime.datetime(2022, 9, 13).isoformat(),
         "amount": 10212.11,
         "unit_price": 12012.12,
     }
