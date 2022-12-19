@@ -5,7 +5,6 @@ from typing import List
 from typing import Type
 from typing import Union
 
-from fastapi import Body, Query
 from fastapi import Depends
 from pydantic import BaseModel
 from pydantic.fields import FieldInfo
