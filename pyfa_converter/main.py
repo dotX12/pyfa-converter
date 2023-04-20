@@ -89,7 +89,7 @@ class PydanticConverter(PydanticConverterUtils):
                 the result of `Depends on` if it is.
 
             """
-            if issubclass(field.type_, BaseModel):
+            if issubclass(type(field.type_), BaseModel):
                 # This is a sub-model.
                 assert hasattr(field.type_, _type_var_name), (
                     f"Sub-model class for {field.name} field must be decorated with"
