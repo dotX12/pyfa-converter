@@ -28,7 +28,7 @@ class PostContractBodySchema(BaseModel):
 
 @app.post("/form-data-body")
 async def example_foo_body_handler(
-    # data1: PostContractBodySchema = PyFaDepends(model=PostContractBodySchema, _type=Form),
+    data1: PostContractBodySchema = PyFaDepends(model=PostContractBodySchema, _type=Form),
     document: UploadFile = File(...),
 ):
     return {"title": data.title, "date": data.date, "file_name": document.filename}
