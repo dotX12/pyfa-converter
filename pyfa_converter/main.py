@@ -89,13 +89,15 @@ class PydanticConverter(PydanticConverterUtils):
                 the result of `Depends on` if it is.
 
             """
-            if issubclass(type(field.type_), BaseModel):
+            field_type = type(field.type_) if not isinstance(field.type_, type) else field.type_
+
+            if issubclass(field_type, BaseModel):
                 # This is a sub-model.
-                assert hasattr(field.type_, _type_var_name), (
+                assert hasattr(field_type, _type_var_name), (
                     f"Sub-model class for {field.name} field must be decorated with"
                     f" `as_form` too."
                 )
-                attr = getattr(field.type_, _type_var_name)
+                attr = getattr(field_type, _type_var_name)
                 return Depends(attr)  # noqa
             else:
                 return cls.param_maker(field=field, _type=_type)
