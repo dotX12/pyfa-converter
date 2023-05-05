@@ -24,8 +24,10 @@ class PydanticConverterUtils:
     def __fill_params(
         cls, param: Callable[..., FieldInfo], model_field: ModelField, default: Any
     ) -> FieldInfo:
+        default_value = default if isinstance(default, bool) else default or None
+        
         return param(
-            default=default or None,
+            default=default_value,
             alias=model_field.field_info.alias or None,
             title=model_field.field_info.title or None,
             description=model_field.field_info.description or None,
