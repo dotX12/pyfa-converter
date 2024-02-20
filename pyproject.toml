@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pyfa-converter"
-version = "1.0.1.0"
+version = "1.0.4.0"
 description = "Pydantic to fastapi model converter."
 authors = ["dotX12 <dev@shitposting.team>"]
 license = "MIT License"
@@ -17,7 +17,7 @@ include = [
 python = ">= 3.8"
 fastapi = ">= 0.65"
 pydantic = ">= 1.6"
-python-multipart = "^0.0.5"
+python-multipart = ">= 0.0.5"
 
 [tool.poetry.dev-dependencies]
 
